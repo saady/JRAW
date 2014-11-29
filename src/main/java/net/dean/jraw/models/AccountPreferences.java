@@ -1,11 +1,13 @@
 package net.dean.jraw.models;
 
+import net.dean.jraw.AbstractPreferences;
+import net.dean.jraw.AccountPreferencesEditor;
 import org.codehaus.jackson.JsonNode;
 
 /**
  * This class provides a model for a user's preferences
  */
-public class AccountPreferences extends JsonModel {
+public class AccountPreferences extends AbstractPreferences<AccountPreferencesEditor> {
     /**
      * Instantiates a new AccountPreferences
      *

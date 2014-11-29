@@ -12,7 +12,7 @@ import java.util.Map;
  * This class helps make a map of data to be sent to the Reddit API to update a user's preferences. Note that this class
  * alone will not make any changes to preferences.
  */
-public class AccountPreferencesEditor {
+public class AccountPreferencesEditor extends AbstractPreferences.Editor<AccountPreferencesEditor, AccountPreferences> {
     private final Map<String, Object> args;
 
     /**
@@ -35,21 +35,6 @@ public class AccountPreferencesEditor {
                 args.put(entry.getKey(), val(entry.getValue()));
             }
         }
-    }
-
-    private Object val(JsonNode node) {
-        if (node.isNull())
-            return null;
-        if (node.isBoolean())
-            return node.asBoolean();
-        if (node.isInt())
-            return node.asInt();
-        if (node.isTextual())
-            return node.asText();
-        if (node.isArray() && node.size() == 1)
-            // Only one value in the array, retrieve that
-            return val(node.get(0));
-        throw new IllegalArgumentException("Could not find value for " + node);
     }
 
     /**

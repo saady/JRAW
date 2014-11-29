@@ -142,9 +142,9 @@ public abstract class Paginator<T extends Thing> implements Iterator<Listing<T>>
             while (hasNext() && getPageIndex() < maxPages) {
                 listings.add(next());
             }
-        } catch (IllegalStateException e) {
-            // Most likely cause will be a NetworkException because next() throws a NetworkException as a cause of an
-            // IllegalStateException
+        } catch (RuntimeException e) {
+            // Most likely cause will be a NetworkException because next() throws a RuntimeException whose cause is the
+            // underlying NetworkException
             if (e.getCause().getClass().equals(NetworkException.class)) {
                 throw (NetworkException) e.getCause();
             } else {
@@ -164,14 +164,14 @@ public abstract class Paginator<T extends Thing> implements Iterator<Listing<T>>
      * Gets the next listing.
      *
      * @return The next listing of submissions
-     * @throws IllegalStateException If there was a problem getting the next listing
+     * @throws RuntimeException If there was a problem getting the next listing
      */
     @Override
     public Listing<T> next() {
         try {
             return getListing(true);
         } catch (NetworkException e) {
-            throw new IllegalStateException("Could not get the next listing", e);
+            throw new RuntimeException("Could not get the next listing", e);
         }
     }
 

@@ -92,7 +92,7 @@ public abstract class AuthenticatedRedditTest extends RedditTest {
     protected final Subreddit getModeratedSubreddit() {
         Listing<Subreddit> moderatorOf = Paginators.mySubreddits(reddit, "moderator").next();
         if (moderatorOf.size() == 0) {
-            throw new IllegalStateException("Must be a moderator of at least one subreddit");
+            throw new SetupRequiredException("Must be a moderator of at least one subreddit");
         }
 
         return moderatorOf.get(0);
